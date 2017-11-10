@@ -24,6 +24,8 @@ use syntax_pos::{SpanData};
 use ty::maps::{QueryMsg};
 use dep_graph::{DepNode};
 
+pub fn assert_sync<T: ?Sized + Sync>() {}
+
 // The name of the associated type for `Fn` return types
 pub const FN_OUTPUT_NAME: &'static str = "Output";
 

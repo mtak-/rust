@@ -24,6 +24,7 @@ use rustc::util::nodemap::{FxHashMap, FxHashSet, NodeMap};
 
 use std::cell::{RefCell, Cell};
 use std::rc::Rc;
+use std::sync::Arc;
 use owning_ref::ErasedBoxRef;
 use syntax::{ast, attr};
 use syntax::ext::base::SyntaxExtension;
@@ -52,7 +53,7 @@ pub struct ImportedFileMap {
     /// The end of this FileMap within the codemap of its original crate
     pub original_end_pos: syntax_pos::BytePos,
     /// The imported FileMap's representation within the local codemap
-    pub translated_filemap: Rc<syntax_pos::FileMap>,
+    pub translated_filemap: Arc<syntax_pos::FileMap>,
 }
 
 pub struct CrateMetadata {

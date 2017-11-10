@@ -187,7 +187,7 @@ mod rustc_trans {
 // The FileLoader provides a way to load files from sources other than the file system.
 pub fn run_compiler<'a>(args: &[String],
                         callbacks: &mut CompilerCalls<'a>,
-                        file_loader: Option<Box<FileLoader + 'static>>,
+                        file_loader: Option<Box<FileLoader + Sync + 'static>>,
                         emitter_dest: Option<Box<Write + Send>>)
                         -> (CompileResult, Option<Session>)
 {
@@ -577,7 +577,6 @@ impl<'a> CompilerCalls<'a> for RustcDefaultCalls {
                                                      &state.expanded_crate.take().unwrap(),
                                                      state.crate_name.unwrap(),
                                                      ppm,
-                                                     state.arena.unwrap(),
                                                      state.arenas.unwrap(),
                                                      state.output_filenames.unwrap(),
                                                      opt_uii.clone(),

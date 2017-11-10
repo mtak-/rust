@@ -40,6 +40,7 @@ use std::borrow::Cow;
 use std::cell::{RefCell, Cell};
 use std::mem;
 use std::rc::Rc;
+use std::sync::Arc;
 use std::{error, fmt};
 
 mod diagnostic;
@@ -113,7 +114,7 @@ pub trait CodeMapper {
     fn span_to_filename(&self, sp: Span) -> FileName;
     fn merge_spans(&self, sp_lhs: Span, sp_rhs: Span) -> Option<Span>;
     fn call_span_if_macro(&self, sp: Span) -> Span;
-    fn ensure_filemap_source_present(&self, file_map: Rc<FileMap>) -> bool;
+    fn ensure_filemap_source_present(&self, file_map: Arc<FileMap>) -> bool;
 }
 
 impl CodeSuggestion {
