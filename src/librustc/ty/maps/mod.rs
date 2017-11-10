@@ -282,8 +282,8 @@ define_maps! { <'tcx>
 
     [] fn specializes: specializes_node((DefId, DefId)) -> bool,
     [] fn in_scope_traits_map: InScopeTraits(DefIndex)
-        -> Option<Rc<FxHashMap<ItemLocalId, Rc<StableVec<TraitCandidate>>>>>,
-    [] fn module_exports: ModuleExports(DefId) -> Option<Rc<Vec<Export>>>,
+        -> Option<Arc<FxHashMap<ItemLocalId, Arc<StableVec<TraitCandidate>>>>>,
+    [] fn module_exports: ModuleExports(DefId) -> Option<Arc<Vec<Export>>>,
     [] fn lint_levels: lint_levels_node(CrateNum) -> Rc<lint::LintLevelMap>,
 
     [] fn impl_defaultness: ImplDefaultness(DefId) -> hir::Defaultness,
@@ -307,11 +307,11 @@ define_maps! { <'tcx>
     [] fn link_args: link_args_node(CrateNum) -> Rc<Vec<String>>,
 
     [] fn named_region_map: NamedRegion(DefIndex) ->
-        Option<Rc<FxHashMap<ItemLocalId, Region>>>,
+        Option<Arc<FxHashMap<ItemLocalId, Region>>>,
     [] fn is_late_bound_map: IsLateBound(DefIndex) ->
-        Option<Rc<FxHashSet<ItemLocalId>>>,
+        Option<Arc<FxHashSet<ItemLocalId>>>,
     [] fn object_lifetime_defaults_map: ObjectLifetimeDefaults(DefIndex)
-        -> Option<Rc<FxHashMap<ItemLocalId, Rc<Vec<ObjectLifetimeDefault>>>>>,
+        -> Option<Arc<FxHashMap<ItemLocalId, Arc<Vec<ObjectLifetimeDefault>>>>>,
 
     [] fn visibility: Visibility(DefId) -> ty::Visibility,
     [] fn dep_kind: DepKind(CrateNum) -> DepKind,
@@ -329,7 +329,7 @@ define_maps! { <'tcx>
     [] fn used_crate_source: UsedCrateSource(CrateNum) -> Rc<CrateSource>,
     [] fn postorder_cnums: postorder_cnums_node(CrateNum) -> Rc<Vec<CrateNum>>,
 
-    [] fn freevars: Freevars(DefId) -> Option<Rc<Vec<hir::Freevar>>>,
+    [] fn freevars: Freevars(DefId) -> Option<Arc<Vec<hir::Freevar>>>,
     [] fn maybe_unused_trait_import: MaybeUnusedTraitImport(DefId) -> bool,
     [] fn maybe_unused_extern_crates: maybe_unused_extern_crates_node(CrateNum)
         -> Rc<Vec<(DefId, Span)>>,

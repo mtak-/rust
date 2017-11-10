@@ -26,6 +26,7 @@ use std::collections::HashSet;
 use std::iter;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
+use std::sync::Arc;
 use std::str;
 
 pub type PResult<'a, T> = Result<T, DiagnosticBuilder<'a>>;
@@ -176,7 +177,7 @@ pub fn new_sub_parser_from_file<'a>(sess: &'a ParseSess,
 }
 
 /// Given a filemap and config, return a parser
-pub fn filemap_to_parser(sess: & ParseSess, filemap: Rc<FileMap>, ) -> Parser {
+pub fn filemap_to_parser(sess: & ParseSess, filemap: Arc<FileMap>) -> Parser {
     let end_pos = filemap.end_pos;
     let mut parser = stream_to_parser(sess, filemap_to_stream(sess, filemap, None));
 
@@ -199,7 +200,7 @@ pub fn new_parser_from_tts(sess: &ParseSess, tts: Vec<TokenTree>) -> Parser {
 /// Given a session and a path and an optional span (for error reporting),
 /// add the path to the session's codemap and return the new filemap.
 fn file_to_filemap(sess: &ParseSess, path: &Path, spanopt: Option<Span>)
-                   -> Rc<FileMap> {
+                   -> Arc<FileMap> {
     match sess.codemap().load_file(path) {
         Ok(filemap) => filemap,
         Err(e) => {
@@ -213,7 +214,7 @@ fn file_to_filemap(sess: &ParseSess, path: &Path, spanopt: Option<Span>)
 }
 
 /// Given a filemap, produce a sequence of token-trees
-pub fn filemap_to_stream(sess: &ParseSess, filemap: Rc<FileMap>, override_span: Option<Span>)
+pub fn filemap_to_stream(sess: &ParseSess, filemap: Arc<FileMap>, override_span: Option<Span>)
                          -> TokenStream {
     let mut srdr = lexer::StringReader::new(sess, filemap);
     srdr.override_span = override_span;
